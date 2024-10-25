@@ -16,3 +16,14 @@ export type Comment = {
     text: string,
     positive: boolean, //true if positive false if negative
 }
+
+//the request the frontend will send
+export type CSIDrequest = {
+    CSID: string
+}
+
+//what the server will respond with if all is good
+export type ClientDataResponce = {
+    message?: string,
+    client: ClientData
+}

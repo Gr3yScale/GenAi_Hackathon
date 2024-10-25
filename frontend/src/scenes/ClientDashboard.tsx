@@ -1,22 +1,31 @@
-import { Box, Slider, Typography, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { tokens } from "../theme.ts";
 import Speedometer from "../components/Speedometer.tsx";
 import { useState } from "react";
+import { ClientData } from "../types/clientScoring.ts";
+import Api from "../Framework/api/api.ts";
 
+type props = {
+    CSID: String;
+}
 
-function Home() {
+function DashBoard({ CSID }: props) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const [value, setValue] = useState(0);
+    const [ClientData, setClientData] = useState(getClientData(CSID));
+
+    function getClientData(CSID: String): ClientData {
+
+        Api.call("GET")
+    }
+
     return (
         <>
-            <Speedometer value={value} colors={{ needle: colors.grey[500] }} />
-
-            <Slider max={1} min={0} step={0.001} defaultValue={0} aria-label="Volume" value={value} onChange={(e, n) => { setValue(Math.max(0, Math.min(1, n as number))) }} />
+            <Speedometer value={ClientData.CSID / 100} colors={{ needle: colors.grey[500] }} />
         </>
 
     )
 }
 
-export default Home;
+export default DashBoard;
