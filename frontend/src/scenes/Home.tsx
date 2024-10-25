@@ -1,5 +1,5 @@
 import {Typography, useTheme} from "@mui/material";
-import {tokens} from "../../theme.ts";
+import {tokens} from "../theme.ts";
 
 
 function Home()  {

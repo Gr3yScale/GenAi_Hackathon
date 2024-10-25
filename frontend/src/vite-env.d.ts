@@ -1,8 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-    readonly AuthServerUrl: string;
-    readonly ProjectApiServerUrl: string;
+    readonly ApiUrl: string;
 }
 
 interface ImportMeta {

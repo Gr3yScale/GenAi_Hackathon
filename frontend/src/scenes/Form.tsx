@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import * as yup from "yup";
-import Header from "../../Framework/components/Header.tsx";
-import Form, {FormFieldMeta, FormFieldValues} from "../../Framework/components/Form.tsx"
+import Header from "../Framework/components/Header.tsx";
+import Form, {FormFieldMeta, FormFieldValues} from "../Framework/components/Form.tsx"
 
 
 interface FormValues extends FormFieldValues {

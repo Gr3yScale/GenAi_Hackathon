@@ -78,10 +78,10 @@ export const tokens = (mode:string) => ({
           100: "#040509",
           200: "#080b12",
           300: "#0c101b",
-          400: "#f2f0f0", // manually changed
+          400: "#F2FBFE", 
           500: "#141b2d",
-          600: "#a1a4ab",
-          700: "#727681",
+          600: "#e3feff",
+          700: "#F2FBFE",
           800: "#a1a4ab",
           900: "#d0d1d5",
         },
@@ -204,7 +204,7 @@ interface ColorMode {
 }
 
 export const useMode = (): [Theme, ColorMode] => {
-  const [mode, setMode] = useState<"light" | "dark">("dark");
+  const [mode, setMode] = useState<"light" | "dark">("light");
 
   const colorMode = useMemo(
       () => ({
