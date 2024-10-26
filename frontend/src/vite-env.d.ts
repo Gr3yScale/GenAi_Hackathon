@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-    readonly ApiUrl: string;
+    readonly Vite_ApiUrl: string;
 }
 
 interface ImportMeta {

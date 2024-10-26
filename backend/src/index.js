@@ -9,9 +9,9 @@ let app;
 app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(cors())
-app.use('/', routes)
-app.listen(process.env.PORT, '0.0.0.0',() => {
+
+app.use('/', (req, res, next) => { console.log(req.data); next() }, routes)
+app.listen(process.env.PORT, () => {
     console.log(`App is running on PORT ${process.env.PORT}`)
 })

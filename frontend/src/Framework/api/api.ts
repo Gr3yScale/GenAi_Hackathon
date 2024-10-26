@@ -17,7 +17,7 @@ export default async function Api<ReturnData, SendData>(
         },
         method,
         url: URL,
-        data,
+        data: data
     };
     try {
         // Make the API call

@@ -1,6 +1,7 @@
 # GenAi Hackathon
 
 
-i have defined some types in teh backend files
-if you could have one request return some dummy data in all the fields i can do all the rest of the front end work
-if you think we should change the types and requests lmk im open to anything realy
+i have defined some types in teh backend files js cant use these so just use them for reference
+
+i have added a dummy endpoint but have a frontend API issue
+also need node >= 23.1 i think

@@ -3,7 +3,7 @@ import { Routes } from "react-router-dom";
 import Topbar from "./Framework/components/navigation/Topbar.tsx";
 import DetailsForm from "./scenes/Form.tsx";
 import PageItem from "./Framework/components/PageItem.tsx";
-import Home from "./scenes/Home.tsx";
+//import Home from "./scenes/Home.tsx";
 import ClientDashboard from "./scenes/ClientDashboard.tsx";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -25,11 +25,11 @@ function App() {
                         <Routes>
                             {/*Do your own*/}
                             {
-                                PageItem((<ClientDashboard />), "/")
+                                PageItem((<ClientDashboard />), "/client/:csid")
                             }
 
                             {
-                                PageItem((<DetailsForm />), "/details")
+                                PageItem((<DetailsForm />), "/")
                             }
 
                             {/*Required framework pages*/}
