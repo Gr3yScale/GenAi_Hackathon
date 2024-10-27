@@ -68,7 +68,7 @@ const Speedometer: React.FC<SpeedometerProps> = ({
     const nx = radius + thickness / 4;
     const ny = radius + thickness / 2;
 
-    const scale = 3;
+    const scale = 2;
     return (
         <svg width={200 * scale} height={106 * scale} viewBox={"0 0 " + (radius * 2 + thickness / 2) + " " + (radius + thickness / 2 + r)} style={{ backgroundColor: background }}>
             {/* Gauge segments, using 5 colors */}

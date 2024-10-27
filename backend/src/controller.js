@@ -6,10 +6,12 @@ const functions = {
         res.status(200).send("Hello World");
     },
     async dummyData(req, res) {
+        const csid = req.params.csid; // Access the csid from the URL
+        console.log("CSID:", csid);
         const data = {
             message: "Dummy Data",
             client: {
-                CSID: 1123,
+                CSID: csid,
                 customerName: "Barclays international",
                 relationshipManager: "Adam Streeter",
                 payments: 21,

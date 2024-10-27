@@ -19,7 +19,6 @@ export type Comment = {
 
 //the request the frontend will send
 export type CSIDrequest = {
-    CSID: string
 }
 
 //what the server will respond with if all is good

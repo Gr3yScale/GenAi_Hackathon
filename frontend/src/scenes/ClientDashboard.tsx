@@ -1,10 +1,12 @@
-import { useTheme } from "@mui/material";
+import { Box, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Stack, Typography, useTheme } from "@mui/material";
 import { tokens } from "../theme.ts";
 import Speedometer from "../components/Speedometer.tsx";
 import { useEffect, useState } from "react";
 import { ClientData, CSIDrequest, ClientDataResponce } from "../types/clientScoring.ts";
 import { useParams } from 'react-router-dom';
-import Api from "../Framework/api/api.ts";
+import { fetchApi } from "../Framework/api/api.ts";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 import "../components/spinner.css"
 
 
@@ -39,11 +41,10 @@ function DashBoard() {
 
     async function getClientData(CSID: string): Promise<ClientData> {
         const ApiUrl = import.meta.env.Vite_ApiUrl || "http://192.168.1.132:3000";
-        const req: CSIDrequest = { CSID }
-        const response = await Api<ClientDataResponce, CSIDrequest>(
+        const response = await fetchApi<ClientDataResponce, CSIDrequest>(
             "GET",
-            ApiUrl + "/dummy",
-            req
+            ApiUrl + "/dummy/csid/" + CSID,
+            {}
         );
         return response.data.client;
     }
@@ -55,62 +56,221 @@ function DashBoard() {
             </div>
         );  // Show a big spinner when loading
     }
+    /*
+        function Box1(data: ClientData) {
+            return (
+                <Box>
+                    <Typography noWrap variant="subtitle1" gutterBottom><strong>CSID</strong>: {data.CSID}</Typography>
+                    <Typography noWrap variant="subtitle1" gutterBottom><strong>Customer Name</strong>: {data.customerName}</Typography>
+                    <Typography noWrap variant="subtitle1" gutterBottom><strong>Relationship Manager</strong>: {data.relationshipManager}</Typography>
+                </Box>
+            )
+        }
+        function Box2(data: ClientData) {
+            return (
+                <Box>
+                    <Typography noWrap variant="subtitle1" gutterBottom><strong>Payments</strong>: {data.payments}</Typography>
+                    <Typography noWrap variant="subtitle1" gutterBottom><strong>Value</strong>: {data.value}</Typography>
+                    <Typography noWrap variant="subtitle1" gutterBottom><strong>STP Rate</strong>: {data.stpRate}</Typography>
+                    <Typography noWrap variant="subtitle1" gutterBottom><strong>Client Rating</strong>: {data.clientRating}</Typography>
+                </Box>
+            )
+        }
+        function Box3(data: ClientData) {
+            return (
+                <Box>
+                    <Typography variant="subtitle1" gutterBottom><strong>Comments</strong></Typography>
+                    <List dense>
+                        {
+                            data.comments ?
+                                data.comments.map((comment, index) => (
+                                    <ListItem key={index}>
+                                        <ListItemIcon>
+                                            {comment.positive ? (
+                                                <CheckCircleIcon color="success" />
+                                            ) : (
+                                                <CancelIcon color="error" />
+                                            )}
+                                        </ListItemIcon>
+                                        <ListItemText primary={comment.text} />
+                                    </ListItem>
+                                )) : (<></>)}
+                    </List>
+                </Box>
+            )
+        }
+        function Box4(data: ClientData) {
+            return (
+                <Box>
+                    <Typography variant="subtitle1" gutterBottom><strong>Improvements</strong></Typography>
+                    <Typography variant="body2" color="textSecondary">{data.improvements}</Typography>
+                </Box>
+            )
+        }
+        function Box5(data: ClientData) {
+            return (
+                <Speedometer value={data.clientRating / 100} colors={{ needle: colors.grey[500] }} />
+            )
+        }*/
 
     return (
         <>
-            {clientData ? (
-                <div>
-                    <div style={{ border: '1px solid #ccc', padding: '20px', maxWidth: '800px', fontFamily: 'Arial, sans-serif' }}>
-                        {/* First Row with Vertical Divider */}
-                        <div style={{ display: 'flex', borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom: '10px' }}>
-                            {/* Left Column */}
-                            <div style={{ flex: 1, paddingRight: '10px' }}>
-                                <p><strong>CSID</strong>: {clientData.CSID}</p>
-                                <p><strong>Customer Name</strong>: {clientData.customerName}</p>
-                                <p><strong>Relationship Manager</strong>: {clientData.relationshipManager}</p>
-                            </div>
+            {
+                clientData ? (
+                    <Box
+                        display="flex"
+                        height="40vh"
+                        sx={{
+                            overflow: 'hidden'
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                flex: '2',
+                                display: 'flex',
+                                flexDirection: 'column', // Stack rows vertically
+                                justifyContent: 'space-between',
+                                padding: 2 // Add some padding
+                            }}
+                        >
+                            {/* First Row */}
+                            <Box display="flex" flexDirection="row" justifyContent="space-between" width="100%" flex="10">
+                                <Box
+                                    sx={{
+                                        flex: '10',
+                                        display: 'flex',
+                                        alignItems: 'top',
+                                        justifyContent: 'left',
+                                        height: '100%' // Full height of the row
+                                    }}
+                                >
+                                    <Box>
+                                        <Typography noWrap variant="subtitle1" gutterBottom><strong>CSID</strong>: {clientData.CSID}</Typography>
+                                        <Typography noWrap variant="subtitle1" gutterBottom><strong>Customer Name</strong>: {clientData.customerName}</Typography>
+                                        <Typography noWrap variant="subtitle1" gutterBottom><strong>Relationship Manager</strong>: {clientData.relationshipManager}</Typography>
+                                    </Box>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        flex: '1',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height: '100%' // Full height of the row
+                                    }}
+                                >
+                                    <Divider orientation="vertical" flexItem />
+                                </Box>
+                                <Box
+                                    sx={{
+                                        flex: '10',
+                                        display: 'flex',
+                                        alignItems: 'top',
+                                        justifyContent: 'left',
+                                        height: '100%' // Full height of the row
+                                    }}
+                                >
+                                    <Box>
+                                        <Typography noWrap variant="subtitle1" gutterBottom><strong>Payments</strong>: {clientData.payments}</Typography>
+                                        <Typography noWrap variant="subtitle1" gutterBottom><strong>Value</strong>: {clientData.value}</Typography>
+                                        <Typography noWrap variant="subtitle1" gutterBottom><strong>STP Rate</strong>: {clientData.stpRate}</Typography>
+                                        <Typography noWrap variant="subtitle1" gutterBottom><strong>Client Rating</strong>: {clientData.clientRating}</Typography>
+                                    </Box>
+                                </Box>
+                            </Box>
 
-                            <div style={{ width: '1px', backgroundColor: '#ddd', margin: '0 10px' }} />
+                            {/* Middle Row */}
+                            <Box
+                                sx={{
+                                    flex: '3', // Fill 1/7 of the space
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    height: '100%' // Full height
+                                }}
+                            >
+                                <Box display="flex">
+                                    <Divider sx={{ width: 700 }} />
+                                </Box>
+                            </Box>
 
-                            {/* Right Column */}
-                            <div style={{ flex: 1 }}>
-                                <p><strong>Payments</strong>: {clientData.payments}</p>
-                                <p><strong>Value</strong>: {clientData.value}</p>
-                                <p><strong>STP Rate</strong>: {clientData.stpRate}</p>
-                                <p><strong>Client Rating</strong>: {clientData.clientRating}</p>
-                            </div>
-                        </div>
+                            {/* Second Row */}
+                            <Box display="flex" flexDirection="row" justifyContent="space-between" width="100%" flex="10">
+                                <Box
+                                    sx={{
+                                        flex: '10',
+                                        display: 'flex',
+                                        alignItems: 'top',
+                                        justifyContent: 'left',
+                                        height: '100%' // Full height of the row
+                                    }}
+                                >
+                                    <Box>
+                                        <Typography variant="subtitle1" gutterBottom><strong>Comments</strong></Typography>
+                                        <List dense>
+                                            {
+                                                clientData.comments ?
+                                                    clientData.comments.map((comment, index) => (
+                                                        <ListItem key={index}>
+                                                            <ListItemIcon>
+                                                                {comment.positive ? (
+                                                                    <CheckCircleIcon color="success" />
+                                                                ) : (
+                                                                    <CancelIcon color="error" />
+                                                                )}
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={comment.text} />
+                                                        </ListItem>
+                                                    )) : (<></>)}
+                                        </List>
+                                    </Box>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        flex: '1',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height: '100%' // Full height of the row
+                                    }}
+                                >
+                                    <Divider orientation="vertical" flexItem />
+                                </Box>
+                                <Box
+                                    sx={{
+                                        flex: '10',
+                                        display: 'flex',
+                                        alignItems: 'top',
+                                        justifyContent: 'left',
+                                        height: '100%' // Full height of the row
+                                    }}
+                                >
+                                    <Box>
+                                        <Typography variant="subtitle1" gutterBottom><strong>Improvements</strong></Typography>
+                                        <Typography variant="body2" color="textSecondary">{clientData.improvements}</Typography>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Box>
 
-                        {/* Second Row with Comments and Improvements */}
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
-                            <div style={{ flex: 1, paddingRight: '10px' }}>
-                                <p><strong>Comments</strong></p>
-                                <p>{clientData.improvements}</p>
-                            </div>
+                        {/* Right Box */}
+                        <Box
+                            sx={{
+                                flex: '1',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '24px'
+                            }}
+                        >
 
-                            <div style={{ width: '1px', backgroundColor: '#ddd', margin: '0 10px' }} />
+                            <Speedometer value={clientData.clientRating / 100} colors={{ needle: colors.grey[500] }} />
+                        </Box>
+                    </Box>
 
-                            <div style={{ flex: 1 }}>
-                                <p><strong>Improvements</strong></p>
-                                <ul>
-                                    {clientData.comments ?
-                                        clientData.comments.map((comments, index) => (
-                                            <li key={index} style={{ color: comments.positive ? 'green' : 'red' }}>
-                                                {comments.positive ? '✓' : '✗'} {comments.text}
-                                            </li>
-                                        )) : (<></>)
-                                    }
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    {/*<Speedometer value={clientData.clientRating / 100} colors={{ needle: colors.grey[500] }} />*/}
-                </div>
-            ) : (
-                <div>No data available</div>
-            )}
+                ) : (
+                    <div>No data available</div>
+                )}
 
         </>
 
