@@ -40,7 +40,7 @@ function DashBoard() {
     }, [csid]);  // Dependency array ensures this effect runs when CSID changes
 
     async function getClientData(CSID: string): Promise<ClientData> {
-        const ApiUrl = import.meta.env.Vite_ApiUrl || "http://192.168.1.132:3000";
+        const ApiUrl = import.meta.env.Vite_ApiUrl || "http://localhost:3000";
         const response = await fetchApi<ClientDataResponce, CSIDrequest>(
             "GET",
             ApiUrl + "/dummy/csid/" + CSID,
